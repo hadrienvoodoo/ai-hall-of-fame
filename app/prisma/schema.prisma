@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Project {
+  id                 String   @id @default(cuid())
+  title              String
+  description        String
+  toolUsed           String
+  problemSolved      String
+  impact             String
+  beforeAfterUrl     String?
+  aiLevel            Int      @default(1)
+  contributorSlackId String
+  contributorName    String
+  slackMessageTs     String?
+  voteCount          Int      @default(0)
+  createdAt          DateTime @default(now())
+  votes              Vote[]
+}
+
+model Contributor {
+  id             String   @id @default(cuid())
+  slackId        String   @unique
+  name           String
+  avatarUrl      String?
+  currentAiLevel Int      @default(1)
+  projectCount   Int      @default(0)
+  createdAt      DateTime @default(now())
+}
+
+model Vote {
+  id           String   @id @default(cuid())
+  projectId    String
+  voterSlackId String
+  createdAt    DateTime @default(now())
+  project      Project  @relation(fields: [projectId], references: [id])
+
+  @@unique([projectId, voterSlackId])
+}
