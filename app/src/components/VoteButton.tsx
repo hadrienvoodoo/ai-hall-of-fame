@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getVotedProjects, markProjectVoted } from "../lib/voter-id";
+import { getVoterId, getVotedProjects, markProjectVoted } from "../lib/voter-id";
 
 export function VoteButton({
   projectId,
@@ -12,28 +12,45 @@ export function VoteButton({
 }) {
   const [count, setCount] = useState(initialCount);
   const [voted, setVoted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const votedProjects = getVotedProjects();
-    const alreadyVoted = votedProjects.has(projectId);
-    setVoted(alreadyVoted);
-    // Add the local vote to the count if already voted
-    if (alreadyVoted) {
-      setCount(initialCount + 1);
-    }
-  }, [projectId, initialCount]);
+    setVoted(getVotedProjects().has(projectId));
+  }, [projectId]);
 
-  function handleVote() {
-    if (voted) return;
+  async function handleVote() {
+    if (voted || loading) return;
+    setLoading(true);
     setCount((c) => c + 1);
     setVoted(true);
-    markProjectVoted(projectId);
+
+    try {
+      const voterId = getVoterId();
+      const res = await fetch("/api/projects/vote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ projectId, voterId }),
+      });
+
+      if (res.ok) {
+        markProjectVoted(projectId);
+      } else {
+        // Revert on failure
+        setCount((c) => c - 1);
+        setVoted(false);
+      }
+    } catch {
+      setCount((c) => c - 1);
+      setVoted(false);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <button
       onClick={handleVote}
-      disabled={voted}
+      disabled={voted || loading}
       className={`flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-sm font-bold transition-all ${
         voted
           ? "bg-[var(--primary)]/20 text-[var(--primary-light)] border border-[var(--primary)]/40"

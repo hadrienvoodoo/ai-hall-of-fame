@@ -30,9 +30,8 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files - .env is committed (no secrets, just SQLite path)
-.env.local
-.env.production
+# env files (contain Turso secrets)
+.env*
 
 # vercel
 .vercel
