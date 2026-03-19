@@ -15,7 +15,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "AI Hall of Fame",
+  title: "Panam AI Hall of Fame",
   description: "Showcase your team's AI achievements",
   icons: { icon: "/logo.png" },
 };

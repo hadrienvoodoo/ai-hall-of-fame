@@ -15,10 +15,10 @@ export default async function Home() {
       <header className="border-b border-[var(--border)]">
         <div className="max-w-6xl mx-auto px-6 py-8 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <img src="/logo.png" alt="AI Hall of Fame" className="w-14 h-14 drop-shadow-[0_0_12px_rgba(139,92,246,0.4)]" />
+            <img src="/logo.png" alt="Panam AI Hall of Fame" className="w-14 h-14 drop-shadow-[0_0_12px_rgba(139,92,246,0.4)]" />
             <div>
               <h1 className="text-4xl font-bold tracking-tight">
-                <span className="text-[var(--primary-light)]">AI</span>{" "}
+                <span className="text-[var(--primary-light)]">Panam AI</span>{" "}
                 <span className="text-[var(--accent)]">Hall of Fame</span>
               </h1>
               <p className="mt-1 text-[var(--muted)] text-lg">
