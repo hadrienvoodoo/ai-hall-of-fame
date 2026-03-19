@@ -20,12 +20,17 @@ export default async function ContributorsPage() {
           >
             ← Back to projects
           </Link>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight">
-            <span className="text-[var(--accent)]">Leaderboard</span>
-          </h1>
-          <p className="mt-2 text-[var(--muted)] text-lg">
-            Team AI adoption rankings
-          </p>
+          <div className="flex items-center gap-4 mt-3">
+            <img src="/logo.png" alt="AI Hall of Fame" className="w-12 h-12 drop-shadow-[0_0_12px_rgba(139,92,246,0.4)]" />
+            <div>
+              <h1 className="text-4xl font-bold tracking-tight">
+                <span className="text-[var(--accent)]">Leaderboard</span>
+              </h1>
+              <p className="mt-1 text-[var(--muted)] text-lg">
+                Team AI adoption rankings
+              </p>
+            </div>
+          </div>
         </div>
       </header>
       <main className="max-w-5xl mx-auto px-6 py-10">
